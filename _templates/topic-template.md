@@ -68,4 +68,6 @@ One or two sentences. If you had to text someone what you learned, what would yo
 
 *[Optional: context on how/where you learned this]*
 
+> **Source:** This note was produced from [this discussion on Claude.ai](url). *(AI-generated — may contain inaccuracies. Verify critical details independently.)*
+
 ← [Back to Index](../README.md)

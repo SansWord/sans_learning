@@ -2,6 +2,8 @@
 
 Notes from random things I'm learning. No curriculum, no fixed order — just captured thinking on topics worth remembering.
 
+> **Disclaimer:** Most notes here originate from conversations with Claude.ai. They may contain hallucinations or inaccuracies. Treat them as a starting point for understanding, not as ground truth — verify anything critical independently.
+
 ---
 
 ## 📚 Notes Index

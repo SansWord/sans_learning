@@ -10,6 +10,8 @@ Context and instructions for Claude Code working in this repo.
 
 The audience is future-me (and anyone else who finds it useful). Notes should be clear enough for a smart stranger to follow, but written with a personal voice — not like a Wikipedia article.
 
+Most notes originate from conversations with Claude.ai. They may contain hallucinations or inaccuracies — treat them as a starting point for understanding, not a ground truth.
+
 ---
 
 ## Tone & Writing Style
@@ -47,6 +49,10 @@ New domain folders may be added as topics grow. See folder conventions below.
 3. **Always update `README.md`** to include the new note under the correct domain section with a one-line description
 4. File names should be `kebab-case.md` (e.g. `harness-engineering.md`)
 5. Place the file in the correct domain folder. If unsure, ask.
+6. **If the note originated from a Claude.ai conversation**, add a source blockquote near the bottom (before the back-to-index footer) in this format:
+   ```
+   > **Source:** This note was produced from [this discussion on Claude.ai](url). *(AI-generated — may contain inaccuracies. Verify critical details independently.)*
+   ```
 
 ---
 

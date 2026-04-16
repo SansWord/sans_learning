@@ -2,6 +2,8 @@
 
 > *"You build the harness. Users ride the horse."*
 
+> **Source:** This note was produced from [this discussion on Claude.ai](https://claude.ai/share/a84a11ea-b270-4e35-b59c-f3e083951050).
+
 ← [Back to Index](../README.md)
 
 ---
