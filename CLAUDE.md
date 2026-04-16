@@ -51,7 +51,7 @@ New domain folders may be added as topics grow. See folder conventions below.
 5. Place the file in the correct domain folder. If unsure, ask.
 6. **If the note originated from a Claude.ai conversation**, add a source blockquote near the bottom (before the back-to-index footer) in this format:
    ```
-   > **Source:** This note was produced from [this discussion on Claude.ai](url). *(AI-generated — may contain inaccuracies. Verify critical details independently.)*
+   > **Source:** This note was produced from <a href="url" target="_blank">this discussion on Claude.ai</a>. *(AI-generated — may contain inaccuracies. Verify critical details independently.)*
    ```
 
 ---
