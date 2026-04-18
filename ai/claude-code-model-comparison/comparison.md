@@ -12,7 +12,7 @@ Same feature implemented twice in Claude Code, back-to-back, using two different
 
 - **API dollar cost:** $9 (Sonnet 4.6) vs $73 (Opus 4.7) — **7.8×**.
 - **Wall-clock time:** ~36 min (Sonnet 4.6) vs ~34 min (Opus 4.7) — **essentially tied**.
-- **Claude Code plan-limit cost:** 9% (Sonnet 4.6) vs 15% (Opus 4.7) of weekly — **~1.7×**.
+- **Claude Code plan-limit cost:** 9% (Sonnet 4.6) vs 15% (Opus 4.7) of a Max 5x session — **~1.7×**.
 - **Unique contributions:** Core code byte-identical. Sonnet 4.6 surfaced a refactoring opportunity (data-driven method registry) during brainstorm that I deferred to `future.md`; Opus 4.7 added a URL-routing fix (`#trends?method=freeform`) not in the prompt but consistent with the app. Each model caught something the other missed.
 - **Execution delegation:** When executing tasks, Sonnet 4.6 offered to delegate simple jobs to cheaper agents; Opus 4.7 silently did everything itself — part of why costs landed 8× apart.
 
@@ -32,7 +32,7 @@ Both branches ship the core feature and pass all tests. Core source files — [`
 
 - **Opus 4.7** — completer. Produced a [107-line design spec](https://github.com/SansWord/sans_cube/blob/freeform-4.7/docs/superpowers/specs/2026-04-17-freeform-method-design.md), an [819-line plan](https://github.com/SansWord/sans_cube/blob/freeform-4.7/docs/superpowers/plans/2026-04-17-freeform-method.md), a [devlog entry](https://github.com/SansWord/sans_cube/blob/freeform-4.7/docs/devlog.md), and a [`future.md` strikethrough](https://github.com/SansWord/sans_cube/blob/freeform-4.7/future.md) on the freeform backlog item. Also inferred one extension that wasn't in the prompt but fit the app's existing URL-param pattern — adding `'freeform'` to the [`#trends?method=` allowlist](https://github.com/SansWord/sans_cube/blob/freeform-4.7/src/hooks/useHashRouter.ts) — which Sonnet missed. Took **~33 min** and **7.8× the API-dollar cost** of Sonnet.
 - **Sonnet 4.6** — pragmatist. Also produced a [design spec (127 lines — longer than Opus's)](https://github.com/SansWord/sans_cube/blob/freeform-4.6/docs/superpowers/specs/2026-04-17-freeform-method-design.md) and a [439-line plan](https://github.com/SansWord/sans_cube/blob/freeform-4.6/docs/superpowers/plans/2026-04-17-freeform-method.md), plus surfaced a meta-insight Opus did not: that adding a 4th method will require touching ≥5 files and so warrants a "data-driven method registry" refactor, which it appended as a [new backlog item in `future.md`](https://github.com/SansWord/sans_cube/blob/freeform-4.6/future.md). Shipped the feature cheaper and slightly faster. Missed the hash-router whitelist, so `#trends?method=freeform` silently falls back to "all". Skipped devlog and did not strikethrough the original freeform backlog item.
-- **Cost** — $73 (Opus) vs $9 (Sonnet) in raw API-dollar terms. But on a Claude Code plan, the ratio is much closer: **15% vs 9% of weekly plan limit** (~1.67× in practical plan-usage terms).
+- **Cost** — $73 (Opus) vs $9 (Sonnet) in raw API-dollar terms. But on a Claude Code plan, the ratio is much closer: **15% vs 9% of a Max 5x session limit** (~1.67× in practical plan-usage terms).
 
 *One-task anecdote, not a benchmark. API pricing as of Apr 2026. See [Methodology](#methodology) and [Caveats](#caveats-and-limitations) below.*
 
@@ -250,8 +250,8 @@ Full token breakdown, per-million-token rates by model, and the line-by-line der
 
 Observed directly from the Claude Code session-limit indicator:
 
-- **4.6 (Sonnet):** 48% → 57% = **9% of weekly plan limit consumed**
-- **4.7 (Opus):** 33% → 48% = **15% of weekly plan limit consumed**
+- **4.6 (Sonnet):** 48% → 57% = **9% of the Max 5x session limit consumed**
+- **4.7 (Opus):** 33% → 48% = **15% of the Max 5x session limit consumed**
 - **Ratio: ~1.67×**
 
 <details>
@@ -260,11 +260,11 @@ Observed directly from the Claude Code session-limit indicator:
 The two metrics diverge by ~5×. Both are correct; they measure different things.
 
 - **API dollars** (7.87× ratio) is what you'd pay if you bought tokens directly from Anthropic's API at published rates. Opus input tokens literally cost 5× Sonnet input tokens; output 5×; cache read 5×. Combined with Opus using 2.3× more tokens on this task, the result is ~8× raw cost.
-- **Plan-limit %** (1.67× ratio) is what your Claude Code Pro/Max plan charges against your weekly bucket. Anthropic normalizes Opus consumption with a weighting much more favorable than the API rate card — effectively ~2× per token instead of 5×. This is the mechanism by which paid Claude Code plans make Opus affordable to use regularly.
+- **Plan-limit %** (1.67× ratio) is what your Claude Code Max plan charges against your session bucket (a 5-hour rolling window on Max 5x). Anthropic normalizes Opus consumption with a weighting much more favorable than the API rate card — effectively ~2× per token instead of 5×. This is the mechanism by which paid Claude Code plans make Opus affordable to use regularly.
 
 Use the appropriate metric for your question:
 
-- "Can I afford to use Opus this week?" → plan-limit %.
+- "Can I afford to run this task in my current 5-hour session?" → plan-limit %.
 - "If I moved to pay-per-token API usage or a different provider, what would this feature have cost?" → API dollars.
 
 </details>
