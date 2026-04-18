@@ -6,3 +6,6 @@
 .vscode/
 *.swp
 *.swo
+
+# Claude Code (per-user local settings only — keep shared settings.json checkable)
+.claude/settings.local.json
