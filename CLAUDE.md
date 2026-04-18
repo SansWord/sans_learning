@@ -29,22 +29,28 @@ Most notes originate from conversations with Claude.ai. They may contain halluci
 
 ```
 sans_learning/
-├── README.md                  # Index — always kept up to date
-├── CLAUDE.md                  # This file
-├── ai/                        # AI, LLMs, ML concepts
-├── web-dev/                   # Frontend, backend, browser APIs
-├── system-design/             # Architecture, infrastructure
+├── README.md                      # Index — always kept up to date
+├── CLAUDE.md                      # This file
+├── ai/                            # AI, LLMs, ML concepts
+│   ├── single-topic.md            #   Single-file notes live at the domain root
+│   └── multi-file-topic/          #   Multi-file notes get their own subfolder
+│       ├── main.md                #     Main doc (this is what README links to)
+│       └── supporting-doc.md      #     Supporting docs that the main doc links out to
+├── web-dev/                       # Frontend, backend, browser APIs
+├── system-design/                 # Architecture, infrastructure
 └── _templates/
-    └── topic-template.md      # Template for all new notes
+    └── topic-template.md          # Template for concept notes
 ```
 
 New domain folders may be added as topics grow. See folder conventions below.
+
+Most notes are single-file concept explainers. Multi-file notes (e.g. a case study with supporting data appendices) live in their own subfolder under the domain; the main doc is what `README.md` points to, and supporting docs link back to it.
 
 ---
 
 ## Rules for New Notes
 
-1. **Always use `_templates/topic-template.md`** as the starting structure
+1. **Use `_templates/topic-template.md`** as the starting structure. The template fits concept explainers; formats that genuinely don't fit (e.g. case studies, comparison reports, experiment writeups) may diverge — **ask first, then tag the note as a template exception** in the Current Notes table below
 2. **Always add the back-to-index footer** — `← [Back to Index](../README.md)`
 3. **Always update `README.md`** to include the new note under the correct domain section with a one-line description
 4. File names should be `kebab-case.md` (e.g. `harness-engineering.md`)
@@ -86,6 +92,7 @@ New domain folders may be added as topics grow. See folder conventions below.
 | File | Domain | Description |
 |---|---|---|
 | `ai/harness-engineering.md` | AI | Building structured systems around AI models |
+| `ai/claude-code-model-comparison/comparison.md` | AI | Same-feature comparison of Claude Sonnet 4.6 vs Opus 4.7 in Claude Code — **template exception** (case study, multi-file note) |
 
 *(Keep this table in sync with README.md index)*
 
