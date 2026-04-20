@@ -11,6 +11,7 @@ Notes from random things I'm learning. No curriculum, no fixed order — just ca
 ### AI
 - [Harness Engineering](ai/harness-engineering.md) — what it means to build systems around AI, and when you actually need it
 - [Claude Code: Sonnet 4.6 vs Opus 4.7](ai/claude-code-model-comparison/comparison.md) — same feature, same prompt, two models, back-to-back: 7.8× the API bill, one integration point caught vs missed
+- [Cost analysis for a feature on Opus 4.7](ai/claude-code-feature-cost-analysis/opus-4-7-cost-analysis.md) — same model, bigger feature: per-story-point dollars stayed flat, attention nearly tripled
 
 ---
 

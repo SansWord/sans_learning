@@ -304,6 +304,6 @@ Rough estimated cost of a hybrid run on a comparable task: ~$15–20 API / ~10�
 
 **Project:** [github.com/SansWord/sans_cube](https://github.com/SansWord/sans_cube) — try the live app at [sansword.github.io/sans_cube](https://sansword.github.io/sans_cube/#solve--2) (opens an example solve).
 
-**Author:** SansWord — [LinkedIn](https://www.linkedin.com/in/sansword/). Reach out if you'd like to talk about this comparison, speedcubing, or web apps built with Claude Code.
+**Author:** SansWord — [LinkedIn](https://www.linkedin.com/in/sansword/). A data platform builder with 13 years of experience. Reach out if you'd like to talk about this comparison, speedcubing, or web apps built with Claude Code.
 
 ← [Back to Index](../../README.md)

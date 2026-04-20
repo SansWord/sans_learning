@@ -93,6 +93,7 @@ Most notes are single-file concept explainers. Multi-file notes (e.g. a case stu
 |---|---|---|
 | `ai/harness-engineering.md` | AI | Building structured systems around AI models |
 | `ai/claude-code-model-comparison/comparison.md` | AI | Same-feature comparison of Claude Sonnet 4.6 vs Opus 4.7 in Claude Code — **template exception** (case study, multi-file note) |
+| `ai/claude-code-feature-cost-analysis/opus-4-7-cost-analysis.md` | AI | Cost analysis of a ~16-point feature built on Opus 4.7 across three clean-context sessions — **template exception** (case study, multi-file note) |
 
 *(Keep this table in sync with README.md index)*
 
