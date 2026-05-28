@@ -95,6 +95,7 @@ Most notes are single-file concept explainers. Multi-file notes (e.g. a case stu
 | `ai/claude-code-model-comparison/comparison.md` | AI | Same-feature comparison of Claude Sonnet 4.6 vs Opus 4.7 in Claude Code — **template exception** (case study, multi-file note) |
 | `ai/claude-code-feature-cost-analysis/opus-4-7-cost-analysis.md` | AI | Cost analysis of a ~16-point feature built on Opus 4.7 across three clean-context sessions — **template exception** (case study, multi-file note) |
 | `system-design/chat-system-design.md` | System Design | Group chat system design walkthrough (≤1000 users/group): routing, fan-out, ordering, scaling — **template exception** (interview-oriented design doc) |
+| `system-design/gcp-vs-aws-services.md` | System Design | Quick-reference table mapping core GCP services to their AWS equivalents — **template exception** (reference table, not a concept explainer) |
 
 *(Keep this table in sync with README.md index)*
 

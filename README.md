@@ -15,6 +15,7 @@ Notes from random things I'm learning. No curriculum, no fixed order — just ca
 
 ### System Design
 - [Group Chat System (≤1000 users/group)](system-design/chat-system-design.md) — interview-oriented walkthrough: user-sharded routing, Kafka-partitioned ingestion, per-group seq, two-layer gap detection, active-only Pub/Sub
+- [GCP vs AWS: Major Services](system-design/gcp-vs-aws-services.md) — quick-reference table mapping core cloud concepts (compute, storage, DBs, messaging, etc.) between the two clouds
 
 ---
 
