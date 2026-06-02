@@ -35,12 +35,12 @@ It's a **two-sided market**: the **DSP buys** for advertisers, the **SSP sells**
    │   decisioning)    │───(3) bid ───┐          │   management)     │
    └─────────┬─────────┘              │          └─────────┬─────────┘
         ▲    │                        ▼              (1) inventory
-   (audience)│             ┌──────────────────┐            │
-   ┌─────────┴──┐          │   AD EXCHANGE    │◀───────────┘
-   │  DMP / CDP │          │  (runs auction)  │
-   └────────────┘          └────────┬─────────┘
+   (audience)│             ┌─────────────────────┐         │
+   ┌─────────┴──┐          │   AD EXCHANGE       │◀────────┘
+   │  DMP / CDP │          │  (runs auction)     │
+   └────────────┘          └─────────────────┬───┘
                             (4) winner notified
-                                     │
+                                             │
              ┌──(5) winning ad markup (tag)──┘
              ▼
    ┌─────────────────────────────────────────────────┐
