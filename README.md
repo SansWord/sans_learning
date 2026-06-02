@@ -8,6 +8,10 @@ Notes from random things I'm learning. No curriculum, no fixed order — just ca
 
 ## 📚 Notes Index
 
+### Ad-Tech
+- [Programmatic Advertising Fundamentals](ad-tech/programmatic-advertising-fundamentals.md) — the players (DSP/SSP/exchange/MMP), how an ad actually gets served (RTB → ad tag → creative fetch, VAST for video/audio), and how conversions get measured and disputed
+- [DSP Data Platform Architecture](ad-tech/dsp-data-platform-architecture.md) — system-design sketch of a DSP's dual real-time + batch (Lambda) pipeline on Kafka: bidding, attribution, and MMP reconciliation
+
 ### AI
 - [Harness Engineering](ai/harness-engineering.md) — what it means to build systems around AI, and when you actually need it
 - [Claude Code: Sonnet 4.6 vs Opus 4.7](ai/claude-code-model-comparison/comparison.md) — same feature, same prompt, two models, back-to-back: 7.8× the API bill, one integration point caught vs missed

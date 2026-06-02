@@ -91,6 +91,8 @@ Most notes are single-file concept explainers. Multi-file notes (e.g. a case stu
 
 | File | Domain | Description |
 |---|---|---|
+| `ad-tech/programmatic-advertising-fundamentals.md` | Ad-Tech | Programmatic advertising fundamentals: players (DSP/SSP/exchange/MMP), ad serving flow, conversion measurement & attribution disputes — **template exception** (concept/reference note) |
+| `ad-tech/dsp-data-platform-architecture.md` | Ad-Tech | System-design sketch of a DSP's dual real-time + batch (Lambda) data platform on Kafka — **template exception** (interview-oriented design doc) |
 | `ai/harness-engineering.md` | AI | Building structured systems around AI models |
 | `ai/claude-code-model-comparison/comparison.md` | AI | Same-feature comparison of Claude Sonnet 4.6 vs Opus 4.7 in Claude Code — **template exception** (case study, multi-file note) |
 | `ai/claude-code-feature-cost-analysis/opus-4-7-cost-analysis.md` | AI | Cost analysis of a ~16-point feature built on Opus 4.7 across three clean-context sessions — **template exception** (case study, multi-file note) |
@@ -101,4 +103,4 @@ Most notes are single-file concept explainers. Multi-file notes (e.g. a case stu
 
 ---
 
-*Last updated: 2026-04*
+*Last updated: 2026-05*
