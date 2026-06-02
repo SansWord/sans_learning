@@ -16,6 +16,63 @@ Ad-tech fundamentals from the perspective of a DSP data-platform: who the player
 | **MMP** (Mobile Measurement Partner) | Measurement | Neutral attribution arbiter for mobile (AppsFlyer, Adjust, Branch). |
 | **DMP / CDP** | Data | Audience/segment data feeding targeting. |
 
+### How the players interact (the request lifecycle)
+
+It's a **two-sided market**: the **DSP buys** for advertisers, the **SSP sells** for publishers, and the **ad exchange** is the auction floor between them. The whole bid cycle (steps 2–5) runs in **~100ms** while the page loads.
+
+```
+        DEMAND SIDE                                      SUPPLY SIDE
+   ┌───────────────────┐                          ┌───────────────────┐
+   │    Advertiser     │                          │     Publisher     │
+   │ (brand / agency)  │                          │ (site / app / CTV)│
+   └─────────┬─────────┘                          └─────────┬─────────┘
+             │ campaign: budget,                            │ lists ad
+             │ targeting, creatives                         │ inventory (1)
+             ▼                                              ▼
+   ┌───────────────────┐    (2) bid request     ┌───────────────────┐
+   │        DSP        │◀───────────────────────│        SSP         │
+   │  (buy-side bid    │                         │ (sell-side yield  │
+   │   decisioning)    │───(3) bid ───┐          │   management)     │
+   └─────────┬─────────┘              │          └─────────┬─────────┘
+        ▲    │                        ▼              (1) inventory
+   (audience)│             ┌──────────────────┐          │
+   ┌─────────┴──┐          │   AD EXCHANGE    │◀─────────┘
+   │  DMP / CDP │          │  (runs auction)  │
+   └────────────┘          └────────┬─────────┘
+                            (4) winner notified
+                                     │
+             ┌──(5) winning ad markup (tag)──┘
+             ▼
+   ┌───────────────────────────────────────────────┐
+   │        USER'S BROWSER / APP / PLAYER            │
+   │             (renders the ad slot)               │
+   └───┬─────────────────────────────────────▲──────┘
+       │ (6) fetch creative                   │ creative bytes
+       ▼                                      │
+   ┌────────────────┐                         │
+   │  AD SERVER+CDN  │─────────────────────────┘
+   └────────────────┘
+                                     (7) user clicks / converts later
+                                     ▼
+   ┌──────────────────────────────────────────────┐
+   │  Advertiser site/app                          │
+   │  (8) conversion pixel fires → DSP             │
+   │      MMP arbitrates credit (mobile)           │
+   └──────────────────────────────────────────────┘
+```
+
+**Step by step:**
+1. **Publisher lists inventory** with its SSP; the SSP connects to ad exchanges.
+2. **User loads a page** → SSP sends the impression to the **ad exchange** → exchange fans out **bid requests** to many DSPs.
+3. **Each DSP decides & bids** — using the advertiser's campaign settings plus **DMP/CDP** audience data to value the impression.
+4. **Exchange runs the auction** and notifies the **winning DSP**.
+5. **Winning DSP returns ad markup** (a pointer/tag, *not* the creative — see §2).
+6. **User's device fetches the creative** from the **ad server + CDN** and renders it.
+7. **User clicks / later converts** on the advertiser's site or app.
+8. **Conversion pixel reports to the DSP**; on mobile the **MMP** arbitrates which channel gets credit (see §4–5).
+
+Steps 2–5 are **real-time bidding (RTB)**. Step 6 is creative serving (§2). Steps 7–8 are measurement/attribution (§3–6).
+
 ---
 
 ## 2. Who serves the ad? (RTB → creative fetch)
