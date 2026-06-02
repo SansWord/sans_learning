@@ -77,6 +77,31 @@ One pipeline can't satisfy both → that's *why* the design is dual-path. Lead w
 - Corrected results load into **Snowflake** (finance/internal) and **Pinot offline segments** (overwrite the approximate real-time numbers).
 - **Trino** on top for ad-hoc SQL across lake + warehouse without moving data.
 
+### Audience data: loading & eviction (DMP/CDP → bidder)
+
+The bidder's `audience` lookup (in the KV store) is fed by the **DMP/CDP**, but *how* that data gets there is a problem in itself — driven by two constraints: a **user-ID space in the billions** (too big for one box's RAM) and a **sub-millisecond lookup budget** (can't call the DMP synchronously at bid time).
+
+**Loading strategy — pre-load + incremental, never synchronous:**
+- **Bulk / batch sync** — DMP delivers segment data as **file drops** (daily S3 dumps of `segment → users`, or deltas); a pipeline loads them into the KV store. Establishes the baseline.
+- **Streaming / incremental updates** — as users enter/exit segments, deltas flow over **Kafka** to keep the store fresh between bulk loads. (Same batch-baseline + stream-freshness split as the rest of the platform.)
+- **Never** a synchronous DMP call during the auction — it must already be in the fast store.
+
+**Can you load everything into memory? No — and you shouldn't:**
+- Won't fit economically → use a **distributed, tiered store**: **Aerospike** (RAM index + SSD data, billions of keys, sub-ms) is the canonical ad-tech choice; or sharded **Redis**. Shard by user ID; no single box holds everything.
+- Most stored users are dead weight → you only bid on users who **appear in bid requests**, so the set worth keeping warm ≈ **recently-active users**, far smaller than the universe of IDs. *This is what makes eviction correct, not just necessary.*
+
+**Eviction — TTL primary, LRU as backstop:**
+- **TTL (primary)** — segment memberships have **business-defined recency** (a "cart abandoner" segment has a 7/30-day window), so TTL = the segment's recency window. Stale memberships expire on their own; churned/dead cookies clear naturally. This is *semantically correct* eviction.
+- **LRU/LFU (secondary)** — a memory-pressure safety valve so the store can't overflow.
+- **Why TTL over LRU as primary:** you don't know in advance who you'll see — a user can reappear after a gap. LRU might evict someone right before they show up while keeping recent-but-stale data. TTL keys on the *business meaning* of the data, which is the right axis.
+
+**Memory optimizations (fit more for less):**
+- **Roaring bitmaps / bitsets** — encode `segment → user IDs` (or `user → segment bitset`) compactly; huge savings vs. string lists + fast set ops.
+- **Bloom filters** — answer "is this user in *any* targeted segment?" in a few bits, short-circuiting the common not-in-segment miss.
+- **Tiered storage** (Aerospike RAM-index over SSD) — don't pay DRAM prices for cold data.
+
+**Consistency:** eventually consistent, and **slight staleness is acceptable** — bidding on someone who left a segment 10 min ago costs one mistargeted bid, not correctness. Tolerating that is exactly what permits the async pre-load model over synchronous DMP calls.
+
 ---
 
 ## 4. The crux: how the two paths reconcile
