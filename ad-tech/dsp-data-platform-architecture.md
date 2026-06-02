@@ -18,40 +18,40 @@ One pipeline can't satisfy both → that's *why* the design is dual-path. Lead w
 ## 2. Architecture diagram
 
 ```
-                         ┌──────────────────────────────────────────────┐
+                         ┌────────────────────────────────────────────────┐
    SSP / Ad Exchanges ──▶│  RTB BIDDER  (~100ms budget)                   │
    (bid requests)        │  reads: budget, freq-cap, audience, ML model   │
                          │  from low-latency KV (Redis/Aerospike)         │
-                         └───────────────┬──────────────────────────────┘
+                         └───────────────┬────────────────────────────────┘
                                          │ emits bid/win/imp logs
    user device ─ impressions, clicks ───▶│
    MMP ─ conversion postbacks ──────────▶│
                                          ▼
-                          ┌──────────────────────────┐
+                          ┌───────────────────────────┐
                           │          KAFKA            │  ← central event log
                           │ topics: bids, imps,       │     (durable, replayable)
                           │ clicks, conversions       │
                           └───┬───────────────────┬───┘
               HOT PATH        │                   │        COLD PATH
         (seconds, approx)     ▼                   ▼     (hourly/daily, exact)
-              ┌───────────────────────┐   ┌──────────────────────────┐
+              ┌────────────────────────┐   ┌───────────────────────────┐
               │ STREAM PROCESSOR       │   │ S3 DATA LAKE (raw Parquet)│ ← source of truth
-              │ (Flink / Spark SS)     │   └────────────┬─────────────┘
+              │ (Flink / Spark SS)     │   └────────────┬──────────────┘
               │ • real-time attribution│                │
               │ • spend / freq counters│                ▼
-              │ • feeds bid model      │   ┌──────────────────────────┐
-              └───┬──────────────┬─────┘   │ AIRFLOW → SPARK (batch)   │
-                  │              │         │ • authoritative re-attrib │
-       ┌──────────▼──┐   ┌───────▼──────┐  │ • dedup + MMP reconcile   │
-       │ KV stores   │   │   PINOT      │  │ • billing, log export     │
-       │ (bidder     │   │ live advertiser│ └──────┬──────────┬────────┘
-       │  counters)  │   │  dashboards) │         │          │
-       └─────────────┘   └──────────────┘         ▼          ▼
-                                            ┌──────────┐  ┌──────────────┐
+              │ • feeds bid model      │     ┌───────────────────────────┐
+              └───┬──────────────┬─────┘     │ AIRFLOW → SPARK (batch)   │
+                  │              │           │ • authoritative re-attrib │
+       ┌──────────▼──┐   ┌───────▼────────┐  │ • dedup + MMP reconcile   │
+       │ KV stores   │   │   PINOT        │  │ • billing, log export     │
+       │ (bidder     │   │ live advertiser│  └──────┬──────────┬─────────┘
+       │  counters)  │   │  dashboards)   │         │          │
+       └─────────────┘   └────────────────┘         ▼          ▼
+                                            ┌──────────┐  ┌───────────────┐
                                             │SNOWFLAKE │  │ PINOT (offline│
                                             │(finance, │  │ segments —    │
                                             │ internal)│  │ corrected)    │
-                                            └──────────┘  └──────────────┘
+                                            └──────────┘  └───────────────┘
                                   Trino queries across lake + warehouse (ad-hoc)
 ```
 
