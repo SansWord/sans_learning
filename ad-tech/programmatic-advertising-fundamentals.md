@@ -29,36 +29,36 @@ It's a **two-sided market**: the **DSP buys** for advertisers, the **SSP sells**
              │ campaign: budget,                            │ lists ad
              │ targeting, creatives                         │ inventory (1)
              ▼                                              ▼
-   ┌───────────────────┐    (2) bid request     ┌───────────────────┐
-   │        DSP        │◀───────────────────────│        SSP         │
+   ┌───────────────────┐    (2) bid request      ┌───────────────────┐
+   │        DSP        │◀────────────────────────│        SSP        │
    │  (buy-side bid    │                         │ (sell-side yield  │
    │   decisioning)    │───(3) bid ───┐          │   management)     │
    └─────────┬─────────┘              │          └─────────┬─────────┘
         ▲    │                        ▼              (1) inventory
-   (audience)│             ┌──────────────────┐          │
-   ┌─────────┴──┐          │   AD EXCHANGE    │◀─────────┘
+   (audience)│             ┌──────────────────┐            │
+   ┌─────────┴──┐          │   AD EXCHANGE    │◀───────────┘
    │  DMP / CDP │          │  (runs auction)  │
    └────────────┘          └────────┬─────────┘
                             (4) winner notified
                                      │
              ┌──(5) winning ad markup (tag)──┘
              ▼
-   ┌───────────────────────────────────────────────┐
+   ┌─────────────────────────────────────────────────┐
    │        USER'S BROWSER / APP / PLAYER            │
    │             (renders the ad slot)               │
-   └───┬─────────────────────────────────────▲──────┘
-       │ (6) fetch creative                   │ creative bytes
-       ▼                                      │
-   ┌────────────────┐                         │
+   └───┬───────────────────────────────────────▲─────┘
+       │ (6) fetch creative                    │ creative bytes
+       ▼                                       │
+   ┌─────────────────┐                         │
    │  AD SERVER+CDN  │─────────────────────────┘
-   └────────────────┘
+   └─────────────────┘
                                      (7) user clicks / converts later
                                      ▼
-   ┌──────────────────────────────────────────────┐
+   ┌───────────────────────────────────────────────┐
    │  Advertiser site/app                          │
    │  (8) conversion pixel fires → DSP             │
    │      MMP arbitrates credit (mobile)           │
-   └──────────────────────────────────────────────┘
+   └───────────────────────────────────────────────┘
 ```
 
 **Step by step:**
