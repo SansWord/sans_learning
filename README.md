@@ -16,6 +16,7 @@ Notes from random things I'm learning. No curriculum, no fixed order — just ca
 - [Harness Engineering](ai/harness-engineering.md) — what it means to build systems around AI, and when you actually need it
 - [Claude Code: Sonnet 4.6 vs Opus 4.7](ai/claude-code-model-comparison/comparison.md) — same feature, same prompt, two models, back-to-back: 7.8× the API bill, one integration point caught vs missed
 - [Cost analysis for a feature on Opus 4.7](ai/claude-code-feature-cost-analysis/opus-4-7-cost-analysis.md) — same model, bigger feature: per-story-point dollars stayed flat, attention nearly tripled
+- [RAG Evaluation](ai/rag-evaluation.md) — how to evaluate RAG systems: two-stage metrics, the RAG triad, LLM-as-judge, offline vs. online eval & monitoring; framed for backend engineers, with 20/30/60-min talk outlines
 
 ### System Design
 - [Group Chat System (≤1000 users/group)](system-design/chat-system-design.md) — interview-oriented walkthrough: user-sharded routing, Kafka-partitioned ingestion, per-group seq, two-layer gap detection, active-only Pub/Sub
